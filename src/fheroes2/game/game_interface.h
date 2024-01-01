@@ -144,6 +144,9 @@ namespace Interface
         fheroes2::GameMode EventDigArtifact();
         void EventKeyArrowPress( int direct );
 
+        void EventQuickSave() const;
+        fheroes2::GameMode EventQuickLoad() const;
+
         fheroes2::GameMode StartGame();
 
         void mouseCursorAreaClickLeft( const int32_t tileIndex ) override;

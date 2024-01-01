@@ -812,6 +812,7 @@ fheroes2::GameMode Interface::AdventureMap::StartGame()
 
                     kingdom.ActionBeforeTurn();
 
+                    iconsPanel.ResetIcons( ICON_ANY );
                     iconsPanel.ShowIcons( ICON_ANY );
                     iconsPanel.SetRedraw();
 
@@ -1058,6 +1059,10 @@ fheroes2::GameMode Interface::AdventureMap::HumanTurn( const bool isload )
                 EventSaveGame();
             else if ( HotKeyPressEvent( Game::HotKeyEvent::MAIN_MENU_LOAD_GAME ) )
                 res = EventLoadGame();
+            else if ( HotKeyPressEvent( Game::HotKeyEvent::WORLD_QUICK_SAVE ) )
+                EventQuickSave();
+            else if ( HotKeyPressEvent( Game::HotKeyEvent::WORLD_QUICK_LOAD ) )
+                res = EventQuickLoad();
             else if ( HotKeyPressEvent( Game::HotKeyEvent::WORLD_FILE_OPTIONS ) )
                 res = EventFileDialog();
             else if ( HotKeyPressEvent( Game::HotKeyEvent::WORLD_ADVENTURE_OPTIONS ) )
