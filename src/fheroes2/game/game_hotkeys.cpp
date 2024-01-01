@@ -265,6 +265,10 @@ namespace
             = { Game::HotKeyCategory::WORLD_MAP, gettext_noop( "hotkey|toggle status" ), fheroes2::Key::KEY_4 };
         hotKeyEventInfo[hotKeyEventToInt( Game::HotKeyEvent::WORLD_TOGGLE_ICONS )]
             = { Game::HotKeyCategory::WORLD_MAP, gettext_noop( "hotkey|toggle icons" ), fheroes2::Key::KEY_5 };
+        hotKeyEventInfo[hotKeyEventToInt( Game::HotKeyEvent::WORLD_QUICK_SAVE )]
+            = { Game::HotKeyCategory::WORLD_MAP, gettext_noop( "hotkey|quick save" ), fheroes2::Key::KEY_F5 };
+        hotKeyEventInfo[hotKeyEventToInt( Game::HotKeyEvent::WORLD_QUICK_LOAD )]
+            = { Game::HotKeyCategory::WORLD_MAP, gettext_noop( "hotkey|quick load" ), fheroes2::Key::KEY_F9 };
 
 #if defined( WITH_DEBUG )
         hotKeyEventInfo[hotKeyEventToInt( Game::HotKeyEvent::WORLD_TRANSFER_CONTROL_TO_AI )]

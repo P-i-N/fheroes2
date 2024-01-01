@@ -357,6 +357,20 @@ fheroes2::GameMode Interface::AdventureMap::EventSaveGame() const
     }
 }
 
+void Interface::AdventureMap::EventQuickSave() const
+{
+    std::ostringstream os;
+
+    os << System::concatPath( Game::GetSaveDir(), "QUICKSAVE" ) << Game::GetSaveFileExtension();
+
+    if ( Game::Save( os.str() ) ) {
+        fheroes2::showStandardTextMessage( "", _( "Game saved successfully." ), Dialog::OK );
+    }
+    else {
+        fheroes2::showStandardTextMessage( "", _( "There was an issue during saving." ), Dialog::OK );
+    }
+}
+
 fheroes2::GameMode Interface::AdventureMap::EventLoadGame() const
 {
     return Dialog::YES
@@ -364,6 +378,27 @@ fheroes2::GameMode Interface::AdventureMap::EventLoadGame() const
                                                          Dialog::YES | Dialog::NO )
                ? fheroes2::GameMode::LOAD_GAME
                : fheroes2::GameMode::CANCEL;
+}
+
+fheroes2::GameMode Interface::AdventureMap::EventQuickLoad() const
+{
+    std::ostringstream os;
+
+    os << System::concatPath( Game::GetSaveDir(), "QUICKSAVE" ) << Game::GetSaveFileExtension();
+
+    const std::string filename = os.str();
+
+    if ( !System::IsFile( filename ) ) {
+        fheroes2::showStandardTextMessage( "", _( "There is no quick save file." ), Dialog::OK );
+        return fheroes2::GameMode::CANCEL;
+    }
+
+    if ( Game::Load( filename ) != fheroes2::GameMode::START_GAME ) {
+        fheroes2::showStandardTextMessage( "", _( "There was an issue during loading." ), Dialog::OK );
+        return fheroes2::GameMode::CANCEL;
+    }
+
+    return fheroes2::GameMode::START_GAME;
 }
 
 void Interface::AdventureMap::EventPuzzleMaps() const

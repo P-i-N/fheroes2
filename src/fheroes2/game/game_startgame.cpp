@@ -814,6 +814,7 @@ fheroes2::GameMode Interface::AdventureMap::StartGame()
 
                     kingdom.ActionBeforeTurn();
 
+                    _iconsPanel.resetIcons( ICON_ANY );
                     _iconsPanel.showIcons( ICON_ANY );
                     _iconsPanel.setRedraw();
 

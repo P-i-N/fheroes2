@@ -133,6 +133,9 @@ namespace Game
         WORLD_TOGGLE_BUTTONS,
         WORLD_TOGGLE_STATUS,
         WORLD_TOGGLE_ICONS,
+        //
+        WORLD_QUICK_SAVE,
+        WORLD_QUICK_LOAD,
 
 #if defined( WITH_DEBUG )
         // This hotkey is only for debug mode as of now.
