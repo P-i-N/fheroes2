@@ -272,7 +272,7 @@ Castle::CastleDialogReturnValue Castle::OpenDialog( const bool openConstructionW
         case ConstructionDialogResult::RecruitHero:
             hero = world.GetHero( *this );
             generateHeroImage( surfaceHero, hero );
-            AudioManager::PlaySound( M82::BUILDTWN );
+            AudioManager::PlaySoundAsync( M82::BUILDTWN );
             alphaHero = 0;
             break;
         default:
@@ -280,7 +280,7 @@ Castle::CastleDialogReturnValue Castle::OpenDialog( const bool openConstructionW
                 Funds remainingFunds = GetKingdom().GetFunds() - PaymentConditions::BuyBuilding( race, build );
                 remainingFunds.Trim();
                 fheroes2::drawResourcePanel( remainingFunds, display, dialogRoi.getPosition() );
-                AudioManager::PlaySound( M82::BUILDTWN );
+                AudioManager::PlaySoundAsync( M82::BUILDTWN );
                 fadeBuilding.StartFadeBuilding( build );
             }
             break;
@@ -619,7 +619,7 @@ Castle::CastleDialogReturnValue Castle::OpenDialog( const bool openConstructionW
                                 Funds remainingFunds = GetKingdom().GetFunds() - PaymentConditions::BuyBuilding( race, BUILD_CASTLE );
                                 remainingFunds.Trim();
                                 fheroes2::drawResourcePanel( remainingFunds, display, dialogRoi.getPosition() );
-                                AudioManager::PlaySound( M82::BUILDTWN );
+                                AudioManager::PlaySoundAsync( M82::BUILDTWN );
                                 fadeBuilding.StartFadeBuilding( BUILD_CASTLE );
                             }
                             break;
