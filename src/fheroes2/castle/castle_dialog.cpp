@@ -269,7 +269,7 @@ Castle::CastleDialogReturnValue Castle::OpenDialog( const bool openConstructionW
         case ConstructionDialogResult::RecruitHero:
             hero = world.GetHero( *this );
             generateHeroImage( surfaceHero, hero );
-            AudioManager::PlaySound( M82::BUILDTWN );
+            AudioManager::PlaySoundAsync( M82::BUILDTWN );
             alphaHero = 0;
             break;
         default:

@@ -99,8 +99,8 @@ void Game::AnimateDelaysInitialize()
     delays[MAPS_DELAY].setDelay( 250 );
     delays[CASTLE_TAVERN_DELAY].setDelay( 75 );
     delays[CASTLE_AROUND_DELAY].setDelay( 200 );
-    delays[CASTLE_BUYHERO_DELAY].setDelay( 130 );
-    delays[CASTLE_BUILD_DELAY].setDelay( 130 );
+    delays[CASTLE_BUYHERO_DELAY].setDelay( 1 );
+    delays[CASTLE_BUILD_DELAY].setDelay( 1 );
     delays[CASTLE_UNIT_DELAY].setDelay( 150 );
     delays[HEROES_FADE_DELAY].setDelay( 32 );
     delays[HEROES_PICKUP_DELAY].setDelay( 40 );
