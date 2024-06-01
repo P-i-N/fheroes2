@@ -1032,7 +1032,7 @@ namespace
         if ( AIIsShowAnimationForHero( hero, AIGetAllianceColors() ) ) {
             // AI-controlled hero cannot activate Whirlpool from the same tile, but should move to this tile from some
             // other tile first, so there is no need to re-center the game area on the hero before his disappearance
-            hero.FadeOut( Game::AIHeroAnimSpeedMultiplier() );
+            // hero.FadeOut( Game::AIHeroAnimSpeedMultiplier() );
         }
 
         hero.Scout( indexTo );
@@ -1043,7 +1043,7 @@ namespace
 
         if ( AIIsShowAnimationForHero( hero, AIGetAllianceColors() ) ) {
             Interface::AdventureMap::Get().getGameArea().SetCenter( hero.GetCenter() );
-            hero.FadeIn( Game::AIHeroAnimSpeedMultiplier() );
+            // hero.FadeIn( Game::AIHeroAnimSpeedMultiplier() );
         }
 
         hero.ActionNewPosition( false );
