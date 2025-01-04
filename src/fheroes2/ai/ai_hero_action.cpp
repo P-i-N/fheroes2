@@ -2209,17 +2209,21 @@ fheroes2::GameMode AI::HeroesMove( Heroes & hero )
     int heroAnimationSpriteId = 0;
 
     const bool hideAIMovements = ( conf.AIMoveSpeed() == 0 );
-    const bool noMovementAnimation = ( conf.AIMoveSpeed() == 10 );
+    bool noMovementAnimation = ( conf.AIMoveSpeed() == 10 );
+    bool speedUpAnimation = false;
 
     const std::vector<Game::DelayType> delayTypes = { Game::CURRENT_AI_DELAY, Game::MAPS_DELAY };
 
     fheroes2::Display & display = fheroes2::Display::instance();
 
     LocalEvent & le = LocalEvent::Get();
-    while ( le.HandleEvents( !hideAIMovements && Game::isDelayNeeded( delayTypes ) ) ) {
+    while ( le.HandleEvents( !hideAIMovements && !speedUpAnimation && Game::isDelayNeeded( delayTypes ) ) ) {
         if ( !hero.isActive() || !hero.isMoveEnabled() ) {
             break;
         }
+
+        // Allow speeding up AI & world animations to make AI turns faster
+        speedUpAnimation = le.getCurrentKeyModifiers() & fheroes2::KeyModifier::KEY_MODIFIER_CTRL;
 
         if ( hideAIMovements || !AIIsShowAnimationForHero( hero, colors ) ) {
             // A hero might have been moving with visible animation for humans till he reaches the area
@@ -2242,7 +2246,7 @@ fheroes2::GameMode AI::HeroesMove( Heroes & hero )
             }
 
             // Render a frame only if there is a need to show one.
-            if ( Game::validateAnimationDelay( Game::MAPS_DELAY ) ) {
+            if ( speedUpAnimation || Game::validateAnimationDelay( Game::MAPS_DELAY ) ) {
                 // Update Adventure Map objects' animation.
                 Game::updateAdventureMapAnimationIndex();
 
@@ -2254,7 +2258,7 @@ fheroes2::GameMode AI::HeroesMove( Heroes & hero )
                 display.render();
             }
         }
-        else if ( Game::validateAnimationDelay( Game::CURRENT_AI_DELAY ) ) {
+        else if ( speedUpAnimation || Game::validateAnimationDelay( Game::CURRENT_AI_DELAY ) ) {
             // re-center in case hero appears from the fog
             if ( recenterNeeded ) {
                 gameArea.SetCenter( hero.GetCenter() );
@@ -2262,6 +2266,12 @@ fheroes2::GameMode AI::HeroesMove( Heroes & hero )
             }
 
             bool resetHeroSprite = false;
+
+            if ( speedUpAnimation ) {
+                heroAnimationFrameCount = 0;
+                noMovementAnimation = true;
+            }
+
             if ( heroAnimationFrameCount > 0 ) {
                 const int32_t heroMovementSkipValue = Game::AIHeroAnimSpeedMultiplier();
 
@@ -2324,7 +2334,7 @@ fheroes2::GameMode AI::HeroesMove( Heroes & hero )
                 }
             }
 
-            if ( Game::validateAnimationDelay( Game::MAPS_DELAY ) ) {
+            if ( speedUpAnimation || Game::validateAnimationDelay( Game::MAPS_DELAY ) ) {
                 // Update Adventure Map objects' animation.
                 Game::updateAdventureMapAnimationIndex();
 
