@@ -557,7 +557,7 @@ void Battle::Only::updateArmyUI( ArmyUI & ui, Heroes * hero, const fheroes2::Poi
     ui.secondarySkill->SetContent( hero->GetSecondarySkills().ToVector() );
     ui.secondarySkill->setRenderingOffset( { offset.x + secondarySkillOffsetX[armyId], offset.y + 199 } );
 
-    ui.artifact = std::make_unique<ArtifactsBar>( hero, true, false, true, true, nullptr );
+    ui.artifact = std::make_unique<ArtifactsBar>( hero, true, false, true, true, false, nullptr );
     ui.artifact->setTableSize( { 7, 2 } );
     ui.artifact->setInBetweenItemsOffset( { 2, 2 } );
     ui.artifact->SetContent( hero->GetBagArtifacts() );

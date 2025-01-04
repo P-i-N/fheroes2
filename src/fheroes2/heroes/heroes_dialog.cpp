@@ -324,7 +324,7 @@ int Heroes::OpenDialog( const bool readonly, const bool fade, const bool disable
     dst_pt.x = dialogRoi.x + 51;
     dst_pt.y = dialogRoi.y + 308;
 
-    ArtifactsBar selectArtifacts( this, false, readonly, isEditor, true, &statusBar );
+    ArtifactsBar selectArtifacts( this, false, readonly, isEditor, true, !disableDismiss, &statusBar );
     selectArtifacts.setTableSize( { 7, 2 } );
     selectArtifacts.setInBetweenItemsOffset( { 15, 15 } );
     selectArtifacts.SetContent( GetBagArtifacts() );
@@ -442,7 +442,13 @@ int Heroes::OpenDialog( const bool readonly, const bool fade, const bool disable
             if ( selectArmy.isSelected() ) {
                 selectArmy.ResetSelected();
             }
+
             selectArtifacts.Redraw( display );
+
+            // Redraw stats in case some artifacts were dismissed
+            primarySkillsBar.Redraw( display );
+            moraleIndicator.Redraw();
+            luckIndicator.Redraw();
 
             if ( isEditor ) {
                 // Artifacts affect many hero stats.

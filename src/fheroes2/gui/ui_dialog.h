@@ -139,8 +139,15 @@ namespace fheroes2
 
         void showPopup( const int buttons ) const override;
 
+        int getResult() const
+        {
+            return _popupResult;
+        }
+
     private:
         const Artifact _artifact;
+
+        mutable int _popupResult = 0;
     };
 
     class ResourceDialogElement final : public DialogElement

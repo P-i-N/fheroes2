@@ -322,6 +322,7 @@ public:
 
     Heroes * FromJailHeroes( const int32_t tileIndex );
     Heroes * GetHeroForHire( const int race, const int heroIDToIgnore = Heroes::UNKNOWN ) const;
+    Heroes * GetHeroForArtifactDismiss() const;
 
     const Heroes * GetHeroesCondWins() const;
     const Heroes * GetHeroesCondLoss() const;

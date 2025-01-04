@@ -351,7 +351,7 @@ public:
     using Interface::ItemsActionBar<Artifact>::RedrawItem;
     using Interface::ItemsActionBar<Artifact>::ActionBarRightMouseHold;
 
-    ArtifactsBar( Heroes * hero, const bool mini, const bool ro, const bool change, const bool allowOpeningMagicBook, StatusBar * bar );
+    ArtifactsBar( Heroes * hero, const bool mini, const bool ro, const bool change, const bool allowOpeningMagicBook, const bool allowDismissArtifacts, StatusBar * bar );
 
     void RedrawBackground( const fheroes2::Rect &, fheroes2::Image & ) override;
     void RedrawItem( Artifact &, const fheroes2::Rect &, bool, fheroes2::Image & ) override;
@@ -380,6 +380,7 @@ private:
     const bool read_only;
     const bool can_change;
     const bool _allowOpeningMagicBook;
+    const bool _allowDismissArtifacts;
     StatusBar * _statusBar;
     std::string msg;
 

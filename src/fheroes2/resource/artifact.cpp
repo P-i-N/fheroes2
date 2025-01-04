@@ -1101,12 +1101,14 @@ bool fheroes2::isPriceOfLoyaltyArtifact( const int artifactID )
     return artifactID >= Artifact::SPELL_SCROLL && artifactID <= Artifact::SPADE_NECROMANCY;
 }
 
-ArtifactsBar::ArtifactsBar( Heroes * hero, const bool mini, const bool ro, const bool change, const bool allowOpeningMagicBook, StatusBar * bar )
+ArtifactsBar::ArtifactsBar( Heroes * hero, const bool mini, const bool ro, const bool change, const bool allowOpeningMagicBook, const bool allowDismissArtifacts,
+                            StatusBar * bar )
     : _hero( hero )
     , use_mini_sprite( mini )
     , read_only( ro )
     , can_change( change )
     , _allowOpeningMagicBook( allowOpeningMagicBook )
+    , _allowDismissArtifacts( allowDismissArtifacts )
     , _statusBar( bar )
 {
     if ( use_mini_sprite ) {
@@ -1251,7 +1253,17 @@ bool ArtifactsBar::ActionBarLeftMouseSingleClick( Artifact & art )
 bool ArtifactsBar::ActionBarLeftMouseDoubleClick( Artifact & art )
 {
     if ( art.isValid() ) {
-        fheroes2::ArtifactDialogElement( art ).showPopup( Dialog::OK );
+        auto artDialog = fheroes2::ArtifactDialogElement( art );
+
+        if ( _allowDismissArtifacts )
+            artDialog.showPopup( Dialog::OK | Dialog::DISMISS );
+        else
+            artDialog.showPopup( Dialog::OK );
+
+        if ( artDialog.getResult() == Dialog::DISMISS
+             && Dialog::YES == fheroes2::showStandardTextMessage( art.GetName(), _( "Are you sure you want to dismiss this artifact?" ), Dialog::YES | Dialog::NO ) ) {
+            _hero->DismissArtifact( art );
+        }
     }
 
     ResetSelected();

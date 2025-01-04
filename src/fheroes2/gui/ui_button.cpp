@@ -539,6 +539,7 @@ namespace fheroes2
         const int buttonNoIcnID = isEvilInterface ? ICN::BUTTON_SMALL_NO_EVIL : ICN::BUTTON_SMALL_NO_GOOD;
         const int buttonOkayIcnID = isEvilInterface ? ICN::UNIFORM_EVIL_OKAY_BUTTON : ICN::UNIFORM_GOOD_OKAY_BUTTON;
         const int buttonCancelIcnID = isEvilInterface ? ICN::UNIFORM_EVIL_CANCEL_BUTTON : ICN::UNIFORM_GOOD_CANCEL_BUTTON;
+        const int buttonDismissIcnID = isEvilInterface ? ICN::BUTTON_SMALL_DISMISS_EVIL : ICN::BUTTON_SMALL_DISMISS_GOOD;
 
         Point offset;
 
@@ -595,6 +596,16 @@ namespace fheroes2
             createButton( offset.x, offset.y, buttonCancelIcnID, 0, 1, Dialog::CANCEL );
             break;
         }
+
+        case Dialog::OK | Dialog::DISMISS:
+            offset.x = area.x;
+            offset.y = area.y + area.height - AGG::GetICN( buttonOkayIcnID, 0 ).height();
+            createButton( offset.x, offset.y, buttonOkayIcnID, 0, 1, Dialog::OK );
+
+            offset.x = area.x + area.width - AGG::GetICN( buttonDismissIcnID, 0 ).width();
+            offset.y = area.y + area.height - AGG::GetICN( buttonDismissIcnID, 0 ).height();
+            createButton( offset.x, offset.y, buttonDismissIcnID, 0, 1, Dialog::DISMISS );
+            break;
 
         default:
             break;

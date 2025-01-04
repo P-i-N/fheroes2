@@ -412,12 +412,17 @@ bool World::isValidCastleEntrance( const fheroes2::Point & tilePosition ) const
     return Maps::isValidAbsPoint( tilePosition.x, tilePosition.y ) && ( getTile( tilePosition.x, tilePosition.y ).getMainObjectType( false ) == MP2::OBJ_CASTLE );
 }
 
-Heroes * World::GetHeroForHire( const int race, const int heroIDToIgnore /* = Heroes::UNKNOWN */ ) const
+Heroes * World::GetHeroForHire( const int race, const int heroIDToIgnore ) const
 {
     return vec_heroes.GetHeroForHire( race, heroIDToIgnore );
 }
 
-Heroes * World::FromJailHeroes( const int32_t tileIndex )
+Heroes * World::GetHeroForArtifactDismiss() const
+{
+    return vec_heroes.GetHeroForArtifactDismiss();
+}
+
+Heroes * World::FromJailHeroes( const int32_t index )
 {
     return vec_heroes.FromJail( tileIndex );
 }

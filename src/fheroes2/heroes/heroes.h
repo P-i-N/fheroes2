@@ -458,6 +458,9 @@ public:
 
     bool PickupArtifact( const Artifact & art );
 
+    // Removes the first found artifact instance from the bag and gives it to random recruitable hero.
+    bool DismissArtifact( const Artifact & art );
+
     bool HasUltimateArtifact() const
     {
         return bag_artifacts.ContainUltimateArtifact();
@@ -822,6 +825,7 @@ public:
     void NewWeek() const;
 
     Heroes * GetHeroForHire( const int race, const int heroIDToIgnore ) const;
+    Heroes * GetHeroForArtifactDismiss() const;
     Heroes * FromJail( int32_t index ) const;
 
     template <typename BaseIterator>

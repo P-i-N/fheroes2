@@ -403,7 +403,7 @@ namespace fheroes2
 
     void ArtifactDialogElement::showPopup( const int buttons ) const
     {
-        showStandardTextMessage( _artifact.GetName(), _artifact.GetDescription(), buttons, { this } );
+        _popupResult = showStandardTextMessage( _artifact.GetName(), _artifact.GetDescription(), buttons, { this } );
     }
 
     ResourceDialogElement::ResourceDialogElement( const int32_t resourceType, std::string text )

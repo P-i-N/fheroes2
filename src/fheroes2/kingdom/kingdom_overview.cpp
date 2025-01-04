@@ -148,7 +148,7 @@ namespace
             armyBar->setInBetweenItemsOffset( { -1, 0 } );
             armyBar->setTroopWindowOffsetY( -60 );
 
-            artifactsBar = std::make_unique<ArtifactsBar>( hero, true, false, false, true, nullptr );
+            artifactsBar = std::make_unique<ArtifactsBar>( hero, true, false, false, true, true, nullptr );
             artifactsBar->setTableSize( { 7, 2 } );
             artifactsBar->setInBetweenItemsOffset( { 1, 8 } );
             artifactsBar->SetContent( hero->GetBagArtifacts() );

@@ -1512,6 +1512,21 @@ bool Heroes::PickupArtifact( const Artifact & art )
     return true;
 }
 
+bool Heroes::DismissArtifact( const Artifact & art )
+{
+    if ( !bag_artifacts.isPresentArtifact( art ) )
+        return false;
+
+    auto * hero = world.GetHeroForArtifactDismiss();
+    if ( hero ) {
+        hero->PickupArtifact( art );
+    }
+
+    bag_artifacts.RemoveArtifact( art );
+
+    return true;
+}
+
 void Heroes::IncreaseExperience( const uint32_t amount, const bool autoselect /* = false */ )
 {
     int oldLevel = GetLevelFromExperience( experience );
@@ -2435,6 +2450,42 @@ Heroes * AllHeroes::GetHeroForHire( const int race, const int heroIDToIgnore ) c
 
     // If there are no heroes who are not yet available for recruitment, then allow heroes to be available for recruitment in several kingdoms at the same time
     const int heroID = heroesForHireNotRecruits.empty() ? Rand::Get( heroesForHire ) : Rand::Get( heroesForHireNotRecruits );
+    assert( heroID >= 0 && static_cast<size_t>( heroID ) < _heroes.size() && _heroes[heroID] );
+
+    return _heroes[heroID].get();
+}
+
+Heroes * AllHeroes::GetHeroForArtifactDismiss() const
+{
+    std::vector<int> heroes;
+    heroes.reserve( Heroes::HEROES_COUNT - 2 );
+
+    const auto [minHeroId, maxHeroId] = getHeroIdRangeForRace( Race::NONE );
+
+    for ( const Heroes * hero : *this ) {
+        assert( hero != nullptr );
+
+        // Only regular (non-campaign) heroes are available for hire
+        if ( hero->GetID() > maxHeroId ) {
+            continue;
+        }
+
+        if ( !hero->isAvailableForHire() ) {
+            continue;
+        }
+
+        // We need someone with a free slot in the artifact bag
+        if ( hero->GetBagArtifacts().isFull() ) {
+            continue;
+        }
+
+        heroes.push_back( hero->GetID() );
+    }
+
+    if ( heroes.empty() )
+        return nullptr;
+
+    const int heroID = Rand::Get( heroes );
     assert( heroID >= 0 && static_cast<size_t>( heroID ) < _heroes.size() && _heroes[heroID] );
 
     return _heroes[heroID].get();
