@@ -25,6 +25,7 @@
 
 #include <cstdint>
 #include <string>
+#include <vector>
 
 #include "color.h"
 #include "game_mode.h"
@@ -127,4 +128,14 @@ namespace Game
     // Returns the string representation of the monster count. If a detailed view is requested, the exact number is returned
     // (unless the abbreviated number is requested), otherwise, a qualitative estimate is returned (Few, Several, etc).
     std::string formatMonsterCount( const uint32_t count, const bool isDetailedView, const bool abbreviateNumber = false );
+
+    struct Modifiers
+    {
+        std::vector<int> blacklistedSecondarySkills;
+        bool allowWarlockNecromancy = true;
+        bool allowArtifactDismiss = false;
+    };
+
+    const Modifiers & GetModifiers();
+    void SetModifiers( const Modifiers & modifiers );
 }

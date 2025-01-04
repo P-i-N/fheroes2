@@ -30,6 +30,7 @@
 
 #include "artifact.h"
 #include "artifact_info.h"
+#include "game.h"
 #include "game_static.h"
 #include "heroes.h"
 #include "heroes_base.h"
@@ -782,8 +783,10 @@ void Skill::SecSkills::FillMax( const Skill::Secondary & skill )
 std::pair<Skill::Secondary, Skill::Secondary> Skill::SecSkills::FindSkillsForLevelUp( const int race, const uint32_t firstSkillSeed,
                                                                                       uint32_t const secondSkillSeed ) const
 {
+    const auto & mods = Game::GetModifiers();
+
     std::unordered_set<int> blacklist;
-    blacklist.reserve( numOfSecondarySkills + Heroes::maxNumOfSecSkills );
+    blacklist.reserve( numOfSecondarySkills + Heroes::maxNumOfSecSkills + mods.blacklistedSecondarySkills.size() );
 
     for ( const Secondary & skill : *this ) {
         if ( skill.Level() != Level::EXPERT ) {
@@ -802,6 +805,14 @@ std::pair<Skill::Secondary, Skill::Secondary> Skill::SecSkills::FindSkillsForLev
             blacklist.insert( skill );
         }
     }
+
+    if ( race == Race::WRLK && mods.allowWarlockNecromancy == false ) {
+        blacklist.insert( Skill::Secondary::NECROMANCY );
+    }
+
+    for ( const int skill : mods.blacklistedSecondarySkills ) {
+        blacklist.insert( skill );
+    };
 
     // Wisdom should be offered to the heroes of "magic" classes on a mandatory basis at least once every three level-ups, regardless of its probability in accordance
     // with the class parameters

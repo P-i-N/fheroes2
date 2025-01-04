@@ -77,6 +77,9 @@ namespace GameStatic
 
     const std::vector<int32_t> & getSecondarySkillsForWitchsHut();
 
+    // Returns filtered vector of secondary skills
+    std::vector<int32_t> getSecondarySkillsForWitchsHut( const std::vector<int> & excludeSkills );
+
     uint32_t getMovementPointBonus( const MP2::MapObjectType objectType );
 
     bool isHeroWorthyToVisitXanadu( const Heroes & hero );

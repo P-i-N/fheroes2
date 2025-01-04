@@ -281,6 +281,17 @@ const std::vector<int32_t> & GameStatic::getSecondarySkillsForWitchsHut()
     return skills;
 }
 
+std::vector<int32_t> GameStatic::getSecondarySkillsForWitchsHut( const std::vector<int> & excludeSkills )
+{
+    auto result = getSecondarySkillsForWitchsHut();
+
+    for ( const auto & skill : excludeSkills ) {
+        result.erase( std::remove( result.begin(), result.end(), skill ), result.end() );
+    }
+
+    return result;
+}
+
 int GameStatic::GetBattleMoatReduceDefense()
 {
     return 3;

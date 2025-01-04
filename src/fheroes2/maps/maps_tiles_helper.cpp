@@ -37,6 +37,7 @@
 #include "artifact.h"
 #include "castle.h"
 #include "direction.h"
+#include "game.h"
 #include "game_static.h"
 #include "logging.h"
 #include "map_object_info.h"
@@ -1055,7 +1056,7 @@ namespace Maps
                 break;
             }
 
-            tile.metadata()[0] = Rand::Get( GameStatic::getSecondarySkillsForWitchsHut() );
+            tile.metadata()[0] = Rand::Get( GameStatic::getSecondarySkillsForWitchsHut( Game::GetModifiers().blacklistedSecondarySkills ) );
             break;
 
         case MP2::OBJ_SHRINE_FIRST_CIRCLE:

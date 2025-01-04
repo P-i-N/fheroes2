@@ -67,6 +67,8 @@ namespace
     bool needFadeIn{ true };
 
     uint32_t maps_animation_frame = 0;
+
+    Game::Modifiers gameModifiers;
 }
 
 namespace Game
@@ -519,4 +521,14 @@ void Game::PlayPickupSound()
     }
 
     AudioManager::PlaySound( wav );
+}
+
+const Game::Modifiers & Game::GetModifiers()
+{
+    return gameModifiers;
+}
+
+void Game::SetModifiers( const Game::Modifiers & modifiers )
+{
+    gameModifiers = modifiers;
 }

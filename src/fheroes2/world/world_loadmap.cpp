@@ -42,6 +42,7 @@
 #include "campaign_scenariodata.h"
 #include "castle.h"
 #include "color.h"
+#include "game.h"
 #include "game_language.h"
 #include "game_over.h"
 #include "game_static.h"
@@ -1027,7 +1028,7 @@ bool World::loadResurrectionMap( const std::string & filename )
                             return false;
                         }
 
-                        const std::vector<int32_t> & skills = GameStatic::getSecondarySkillsForWitchsHut();
+                        const auto skills = GameStatic::getSecondarySkillsForWitchsHut( Game::GetModifiers().blacklistedSecondarySkills );
 
                         return std::all_of( metadata.selectedItems.begin(), metadata.selectedItems.end(),
                                             [&skills]( const int32_t skillId ) { return std::find( skills.begin(), skills.end(), skillId ) != skills.end(); } );
