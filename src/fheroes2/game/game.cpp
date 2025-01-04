@@ -486,7 +486,7 @@ std::string Game::formatMonsterCount( const uint32_t count, const bool isDetaile
         return ( abbreviateNumber ? fheroes2::abbreviateNumber( count ) : std::to_string( count ) );
     }
 
-    return Army::SizeString( count );
+    return Settings::Get().ShowTroopIntervals() ? Army::IntervalString( count ) : Army::SizeString( count );
 }
 
 void Game::PlayPickupSound()

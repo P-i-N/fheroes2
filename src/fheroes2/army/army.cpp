@@ -188,6 +188,13 @@ std::string Army::TroopSizeString( const Troop & troop )
     return str;
 }
 
+std::string Army::TroopIntervalString( const Troop & troop )
+{
+    std::string str = IntervalString( troop.GetCount() ) + "\n%{monster}";
+    StringReplaceWithLowercase( str, "%{monster}", troop.GetMultiName() );
+    return str;
+}
+
 std::string Army::SizeString( uint32_t size )
 {
     switch ( getArmySize( size ) ) {
@@ -209,6 +216,36 @@ std::string Army::SizeString( uint32_t size )
         return _( "army|Zounds" );
     case ArmySize::ARMY_LEGION:
         return _( "army|Legion" );
+    default:
+        // Are you passing the correct value?
+        assert( 0 );
+        break;
+    }
+
+    return {};
+}
+
+std::string Army::IntervalString( uint32_t size )
+{
+    switch ( getArmySize( size ) ) {
+    case ArmySize::ARMY_FEW:
+        return "1-5";
+    case ArmySize::ARMY_SEVERAL:
+        return "6-10";
+    case ArmySize::ARMY_PACK:
+        return "11-20";
+    case ArmySize::ARMY_LOTS:
+        return "21-50";
+    case ArmySize::ARMY_HORDE:
+        return "51-100";
+    case ArmySize::ARMY_THRONG:
+        return "101-250";
+    case ArmySize::ARMY_SWARM:
+        return "251-500";
+    case ArmySize::ARMY_ZOUNDS:
+        return "501-1000";
+    case ArmySize::ARMY_LEGION:
+        return "1000+";
     default:
         // Are you passing the correct value?
         assert( 0 );

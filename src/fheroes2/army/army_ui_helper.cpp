@@ -31,6 +31,7 @@
 #include "game.h"
 #include "icn.h"
 #include "image.h"
+#include "settings.h"
 #include "ui_text.h"
 
 void fheroes2::drawMiniMonsters( const Troops & troops, int32_t cx, const int32_t cy, const int32_t width, uint32_t first, uint32_t count, const bool isCompact,
@@ -93,7 +94,8 @@ void fheroes2::drawMiniMonsters( const Troops & troops, int32_t cx, const int32_
                 monstersCountRepresentation = "???";
             }
             else {
-                monstersCountRepresentation = Army::SizeString( troop->GetCount() );
+                const auto & settings = Settings::Get();
+                monstersCountRepresentation = settings.ShowTroopIntervals() ? Army::IntervalString( troop->GetCount() ) : Army::SizeString( troop->GetCount() );
             }
         }
 

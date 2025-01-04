@@ -200,6 +200,8 @@ public:
     bool isHideInterfaceEnabled() const;
     bool isEvilInterfaceEnabled() const;
 
+    bool ShowTroopIntervals() const;
+    
     void setInterfaceType( InterfaceType type )
     {
         _interfaceType = type;
@@ -374,6 +376,7 @@ private:
 
     // Game related options.
     BitModes _gameOptions;
+    BitModes _gameExOptions;
 
     // Editor related options.
     BitModes _editorOptions;

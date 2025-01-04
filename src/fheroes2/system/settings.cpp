@@ -83,6 +83,11 @@ namespace
         GAME_SCREEN_SCALING_TYPE_NEAREST = 0x20000000
     };
 
+    enum GameExOptions : uint32_t
+    {
+        GAME_EX_SHOW_TROOP_INTERVALS = 0x00000001,
+    };
+
     enum EditorOptions : uint32_t
     {
         EDITOR_UNUSED = 0x00000001,
@@ -123,6 +128,8 @@ Settings::Settings()
     _gameOptions.SetModes( GAME_BATTLE_SHOW_MOUSE_SHADOW );
     _gameOptions.SetModes( GAME_BATTLE_SHOW_MOVE_SHADOW );
     _gameOptions.SetModes( GAME_BATTLE_AUTO_RESOLVE );
+
+    _gameExOptions.SetModes( GAME_EX_SHOW_TROOP_INTERVALS );
 
     _editorOptions.SetModes( EDITOR_ANIMATION );
 
@@ -931,6 +938,11 @@ bool Settings::isEvilInterfaceEnabled() const
     }
 
     return false;
+}
+
+bool Settings::ShowTroopIntervals() const
+{
+    return _gameExOptions.Modes( GAME_EX_SHOW_TROOP_INTERVALS );
 }
 
 bool Settings::isEditorAnimationEnabled() const

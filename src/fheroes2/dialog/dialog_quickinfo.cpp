@@ -188,7 +188,10 @@ namespace
                 }
             }
             else {
-                str.append( _( "guarded by " ) ).append( Translation::StringLower( Army::TroopSizeString( troop ) ) );
+                const auto & settings = Settings::Get();
+                auto troopStr = settings.ShowTroopIntervals() ? Army::TroopIntervalString( troop ) : Army::TroopSizeString( troop );
+
+                str.append( _( "guarded by " ) ).append( Translation::StringLower( troopStr ) );
             }
         }
 
@@ -213,7 +216,8 @@ namespace
             return str;
         }
 
-        return Army::TroopSizeString( troop );
+        const auto & settings = Settings::Get();
+        return settings.ShowTroopIntervals() ? Army::TroopIntervalString( troop ) : Army::TroopSizeString( troop );
     }
 
     std::string showDwellingInfo( const Maps::Tile & tile, const bool isOwned )

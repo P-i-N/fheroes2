@@ -163,7 +163,10 @@ public:
     static const size_t maximumTroopCount = 5;
 
     static std::string SizeString( uint32_t );
+    static std::string IntervalString( uint32_t );
+
     static std::string TroopSizeString( const Troop & );
+    static std::string TroopIntervalString( const Troop & );
 
     // Comparison functions
     static bool WeakestTroop( const Troop *, const Troop * );
