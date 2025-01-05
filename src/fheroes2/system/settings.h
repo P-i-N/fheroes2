@@ -201,6 +201,7 @@ public:
     bool isEvilInterfaceEnabled() const;
 
     bool ShowTroopIntervals() const;
+    bool AutoPortalDiscovery() const;
     
     void setInterfaceType( InterfaceType type )
     {

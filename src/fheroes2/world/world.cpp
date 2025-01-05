@@ -781,6 +781,33 @@ MapsIndexes World::GetTeleportEndPoints( const int32_t index ) const
     return result;
 }
 
+bool World::SameTeleportEndPoints( const int32_t index1, const int32_t index2 ) const
+{
+    if ( !Maps::isValidAbsIndex( index1 ) || !Maps::isValidAbsIndex( index2 ) ) {
+        return false;
+    }
+
+    if ( index1 == index2 ) {
+        return true;
+    }
+
+    const Maps::Tile & tile1 = getTile( index1 );
+    const Maps::Tile & tile2 = getTile( index2 );
+
+    if ( tile1.getMainObjectType( false ) != MP2::OBJ_STONE_LITHS || tile2.getMainObjectType( false ) != MP2::OBJ_STONE_LITHS ) {
+        return false;
+    }
+
+    const Maps::ObjectPart * objectPart1 = Maps::getObjectPartByActionType( tile1, MP2::OBJ_STONE_LITHS );
+    const Maps::ObjectPart * objectPart2 = Maps::getObjectPartByActionType( tile2, MP2::OBJ_STONE_LITHS );
+
+    if ( objectPart1 == nullptr || objectPart2 == nullptr ) {
+        return false;
+    }
+
+    return objectPart1->icnIndex == objectPart2->icnIndex;
+}
+
 int32_t World::NextTeleport( const int32_t index ) const
 {
     const MapsIndexes teleports = GetTeleportEndPoints( index );

@@ -643,6 +643,18 @@ int Interface::AdventureMap::GetCursorFocusHeroes( const Heroes & hero, const Ma
     case MP2::OBJ_BOAT:
         return Cursor::DistanceThemes( Cursor::CURSOR_HERO_BOAT, hero.getNumOfTravelDays( tile.GetIndex() ) );
 
+    case MP2::OBJ_STONE_LITHS: {
+        // Is player currently standing on the stone liths?
+        if ( hero.getObjectTypeUnderHero() == MP2::OBJ_STONE_LITHS && world.SameTeleportEndPoints( hero.GetIndex(), tile.GetIndex() ) ) {
+            return Cursor::CURSOR_HERO_ACTION;
+        }
+
+        const bool isProtected
+            = ( Maps::isTileUnderProtection( tile.GetIndex() ) || ( !hero.isFriends( getColorFromTile( tile ) ) && isCaptureObjectProtected( tile ) ) );
+
+        return Cursor::DistanceThemes( isProtected ? Cursor::CURSOR_HERO_FIGHT : Cursor::CURSOR_HERO_ACTION, hero.getNumOfTravelDays( tile.GetIndex() ) );
+    }
+
     default:
         if ( MP2::isInGameActionObject( tile.getMainObjectType() ) ) {
             const bool isProtected

@@ -561,6 +561,7 @@ public:
     void ActionNewPosition( const bool allowMonsterAttack );
     void ApplyPenaltyMovement( uint32_t penalty );
     void ActionSpellCast( const Spell & spell );
+    void ActionTeleport2Dest( const int32_t destination );
 
     // Update map in the scout area around the Hero on radar (mini-map).
     void ScoutRadar() const;

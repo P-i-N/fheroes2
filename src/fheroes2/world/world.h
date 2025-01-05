@@ -373,6 +373,9 @@ public:
     int32_t NextTeleport( const int32_t index ) const;
     MapsIndexes GetTeleportEndPoints( const int32_t index ) const;
 
+    // Check if both indices contain teleports (stone liths) of the same type and it is possible to teleport between them.
+    bool SameTeleportEndPoints( const int32_t index1, const int32_t index2 ) const;
+
     int32_t NextWhirlpool( const int32_t index ) const;
     MapsIndexes GetWhirlpoolEndPoints( const int32_t index ) const;
 

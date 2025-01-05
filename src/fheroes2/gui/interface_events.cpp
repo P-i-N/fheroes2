@@ -82,6 +82,13 @@ void Interface::AdventureMap::ShowPathOrStartMoveHero( Heroes * hero, const int3
 
     assert( !hero->Modes( Heroes::ENABLEMOVE ) );
 
+    // If player is standing on stone liths and trying to teleport to another stone liths of the same type,
+    // then just teleport him to the destination directly.
+    if ( world.SameTeleportEndPoints( hero->GetIndex(), destinationIdx ) ) {
+        hero->ActionTeleport2Dest( destinationIdx );
+        return;
+    }
+
     const Route::Path & path = hero->GetPath();
 
     // Calculate and show the hero's path

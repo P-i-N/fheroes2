@@ -85,7 +85,11 @@ namespace
 
     enum GameExOptions : uint32_t
     {
+        // Show troop intervals instead of text description (Lots -> "21-50")
         GAME_EX_SHOW_TROOP_INTERVALS = 0x00000001,
+
+        // Automatically show all portals of the same type, once you step inside one
+        GAME_EX_AUTO_PORTAL_DISCOVERY = 0x00000002,
     };
 
     enum EditorOptions : uint32_t
@@ -130,6 +134,7 @@ Settings::Settings()
     _gameOptions.SetModes( GAME_BATTLE_AUTO_RESOLVE );
 
     _gameExOptions.SetModes( GAME_EX_SHOW_TROOP_INTERVALS );
+    _gameExOptions.SetModes( GAME_EX_AUTO_PORTAL_DISCOVERY );
 
     _editorOptions.SetModes( EDITOR_ANIMATION );
 
@@ -943,6 +948,11 @@ bool Settings::isEvilInterfaceEnabled() const
 bool Settings::ShowTroopIntervals() const
 {
     return _gameExOptions.Modes( GAME_EX_SHOW_TROOP_INTERVALS );
+}
+
+bool Settings::AutoPortalDiscovery() const
+{
+    return _gameExOptions.Modes( GAME_EX_AUTO_PORTAL_DISCOVERY );
 }
 
 bool Settings::isEditorAnimationEnabled() const

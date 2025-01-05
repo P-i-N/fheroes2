@@ -1940,31 +1940,21 @@ namespace
 
         assert( world.getTile( index_to ).getMainObjectType() != MP2::OBJ_HERO );
 
-        AudioManager::PlaySound( M82::KILLFADE );
-        hero.ShowPath( false );
-        hero.FadeOut();
+        hero.ActionTeleport2Dest( index_to );
 
-        const fheroes2::Point fromPoint = Maps::GetPoint( index_from );
+        if ( Settings::Get().AutoPortalDiscovery() ) {
+            // Discover all the teleporters
+            MapsIndexes allEndPoints = world.GetTeleportEndPoints( index_from );
 
-        hero.Scout( index_to );
-        hero.Move2Dest( index_to );
-        hero.GetPath().Reset();
+            for ( const int32_t i : allEndPoints ) {
+                hero.Scout( i );
+            };
 
-        // Clear the previous hero position
-        Interface::AdventureMap & I = Interface::AdventureMap::Get();
-        I.getRadar().SetRenderArea( { fromPoint.x, fromPoint.y, 1, 1 } );
-        I.redraw( Interface::REDRAW_RADAR );
-
-        I.getGameArea().SetCenter( hero.GetCenter() );
-
-        I.getRadar().SetRenderArea( hero.GetScoutRoi() );
-        I.setRedraw( Interface::REDRAW_GAMEAREA | Interface::REDRAW_RADAR );
-
-        AudioManager::PlaySound( M82::KILLFADE );
-        hero.FadeIn();
-        hero.ShowPath( true );
-
-        hero.ActionNewPosition( false );
+            // Redraw whole radar
+            Interface::AdventureMap & I = Interface::AdventureMap::Get();
+            I.getRadar().SetRenderArea( { 0, 0, world.w(), world.h() } );
+            I.redraw( Interface::REDRAW_RADAR );
+        }
     }
 
     void ActionToWhirlpools( Heroes & hero, int32_t index_from )
@@ -3705,6 +3695,41 @@ void Heroes::ScoutRadar() const
 #endif
 
     I.setRedraw( Interface::REDRAW_RADAR );
+}
+
+void Heroes::ActionTeleport2Dest( const int32_t destination )
+{
+    const int32_t currentIndex = GetIndex();
+
+    if ( destination == currentIndex ) {
+        return;
+    }
+
+    AudioManager::PlaySound( M82::KILLFADE );
+    ShowPath( false );
+    FadeOut();
+
+    const fheroes2::Point fromPoint = Maps::GetPoint( currentIndex );
+
+    Scout( destination );
+    Move2Dest( destination );
+    GetPath().Reset();
+
+    // Clear the previous hero position
+    Interface::AdventureMap & I = Interface::AdventureMap::Get();
+    I.getRadar().SetRenderArea( { fromPoint.x, fromPoint.y, 1, 1 } );
+    I.redraw( Interface::REDRAW_RADAR );
+
+    I.getGameArea().SetCenter( GetCenter() );
+
+    I.getRadar().SetRenderArea( GetScoutRoi() );
+    I.setRedraw( Interface::REDRAW_GAMEAREA | Interface::REDRAW_RADAR );
+
+    AudioManager::PlaySound( M82::KILLFADE );
+    FadeIn();
+    ShowPath( true );
+
+    ActionNewPosition( false );
 }
 
 void Heroes::Action( int tileIndex )
