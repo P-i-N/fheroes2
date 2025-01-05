@@ -90,6 +90,9 @@ namespace
 
         // Automatically show all portals of the same type, once you step inside one
         GAME_EX_AUTO_PORTAL_DISCOVERY = 0x00000002,
+
+        // Show more detailed quick info in adventure map (when right-clicking on a tile)
+        GAME_EX_SHOW_DETAILED_QUICK_INFO = 0x00000004,
     };
 
     enum EditorOptions : uint32_t
@@ -135,6 +138,7 @@ Settings::Settings()
 
     _gameExOptions.SetModes( GAME_EX_SHOW_TROOP_INTERVALS );
     _gameExOptions.SetModes( GAME_EX_AUTO_PORTAL_DISCOVERY );
+    _gameExOptions.SetModes( GAME_EX_SHOW_DETAILED_QUICK_INFO );
 
     _editorOptions.SetModes( EDITOR_ANIMATION );
 
@@ -953,6 +957,11 @@ bool Settings::ShowTroopIntervals() const
 bool Settings::AutoPortalDiscovery() const
 {
     return _gameExOptions.Modes( GAME_EX_AUTO_PORTAL_DISCOVERY );
+}
+
+bool Settings::ShowDetailedQuickInfo() const
+{
+    return _gameExOptions.Modes( GAME_EX_SHOW_DETAILED_QUICK_INFO );
 }
 
 bool Settings::isEditorAnimationEnabled() const

@@ -460,6 +460,7 @@ namespace
         }
 
         const Kingdom & kingdom = world.GetKingdom( playerColor );
+        const Settings & settings = Settings::Get();
 
         switch ( objectType ) {
         case MP2::OBJ_MONSTER:
@@ -576,8 +577,13 @@ namespace
 
         case MP2::OBJ_TREE_OF_KNOWLEDGE:
             return showTreeOfKnowledgeInfo( tile, kingdom.isVisited( tile ) );
-        // These objects do not have extra text for quick info.
         case MP2::OBJ_ARTIFACT:
+            if ( settings.ShowDetailedQuickInfo() ) {
+                Artifact art = getArtifactFromTile( tile );
+                return art.GetDescription();
+            }
+            [[fallthrough]];
+        // These objects do not have extra text for quick info.
         case MP2::OBJ_CAMPFIRE:
         default:
             return MP2::StringObject( objectType );

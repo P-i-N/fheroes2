@@ -202,6 +202,7 @@ public:
 
     bool ShowTroopIntervals() const;
     bool AutoPortalDiscovery() const;
+    bool ShowDetailedQuickInfo() const;
     
     void setInterfaceType( InterfaceType type )
     {
