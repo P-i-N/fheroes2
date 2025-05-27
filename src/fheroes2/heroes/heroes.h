@@ -445,6 +445,9 @@ public:
         move_point = 0;
     }
 
+    void ResetMovePointsToBoat();
+    void ResetMovePointsToCoast();
+
     bool HasSecondarySkill( int ) const;
     bool HasMaxSecondarySkill() const;
     int GetLevelSkill( int ) const override;

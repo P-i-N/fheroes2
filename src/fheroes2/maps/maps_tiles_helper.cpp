@@ -37,7 +37,7 @@
 #include "artifact.h"
 #include "castle.h"
 #include "direction.h"
-#include "game.h"
+#include "game_modifiers.h"
 #include "game_static.h"
 #include "logging.h"
 #include "map_object_info.h"
@@ -103,9 +103,11 @@ namespace
         case MP2::OBJ_RANDOM_ARTIFACT:
             art = Artifact::Rand( Artifact::ART_LEVEL_ALL_NORMAL );
             break;
-        case MP2::OBJ_RANDOM_ARTIFACT_TREASURE:
-            art = Artifact::Rand( Artifact::ART_LEVEL_TREASURE );
+        case MP2::OBJ_RANDOM_ARTIFACT_TREASURE: {
+            const Game::Modifiers & mods = Game::GetModifiers();
+            art = Artifact::Rand( static_cast<Artifact::ArtLevel>( mods.treasureChestArtLevel ) );
             break;
+        }
         case MP2::OBJ_RANDOM_ARTIFACT_MINOR:
             art = Artifact::Rand( Artifact::ART_LEVEL_MINOR );
             break;

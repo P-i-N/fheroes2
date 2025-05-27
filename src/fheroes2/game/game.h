@@ -73,6 +73,7 @@ namespace Game
     fheroes2::GameMode LoadHotseat();
     fheroes2::GameMode SelectCampaignScenario( const fheroes2::GameMode prevMode, const bool allowToRestart );
     fheroes2::GameMode SelectScenario( const uint8_t humanPlayerCount );
+    fheroes2::GameMode SelectScenarioEx( const uint8_t humanPlayerCount );
     fheroes2::GameMode StartGame();
     fheroes2::GameMode StartBattleOnly();
     fheroes2::GameMode DisplayLoadGameDialog();
@@ -128,14 +129,4 @@ namespace Game
     // Returns the string representation of the monster count. If a detailed view is requested, the exact number is returned
     // (unless the abbreviated number is requested), otherwise, a qualitative estimate is returned (Few, Several, etc).
     std::string formatMonsterCount( const uint32_t count, const bool isDetailedView, const bool abbreviateNumber = false );
-
-    struct Modifiers
-    {
-        std::vector<int> blacklistedSecondarySkills;
-        bool allowWarlockNecromancy = true;
-        bool allowArtifactDismiss = false;
-    };
-
-    const Modifiers & GetModifiers();
-    void SetModifiers( const Modifiers & modifiers );
 }

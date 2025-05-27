@@ -30,6 +30,7 @@
 
 #include "artifact.h"
 #include "artifact_info.h"
+#include "game_modifiers.h"
 #include "heroes_base.h"
 #include "monster.h"
 #include "race.h"
@@ -519,10 +520,16 @@ Spell Spell::getRandomSpell( const int level )
     std::vector<Spell> validSpells;
     validSpells.reserve( Spell::SPELL_COUNT );
 
+    const Game::Modifiers & mods = Game::GetModifiers();
+
     for ( int32_t spellId = NONE; spellId < PETRIFY; ++spellId ) {
         const Spell spell( spellId );
 
         if ( level != spell.Level() ) {
+            continue;
+        }
+
+        if ( std::find( mods.blacklistedSpells.begin(), mods.blacklistedSpells.end(), spellId ) != mods.blacklistedSpells.end() ) {
             continue;
         }
 
@@ -539,6 +546,8 @@ std::vector<int> Spell::getAllSpellIdsSuitableForSpellBook( const int spellLevel
     std::vector<int> result;
     result.reserve( SPELL_COUNT );
 
+    const Game::Modifiers & mods = Game::GetModifiers();
+
     for ( int spellId = 0; spellId < SPELL_COUNT; ++spellId ) {
         if ( spellId == NONE || ( spellId >= RANDOM && spellId <= PETRIFY ) ) {
             continue;
@@ -550,6 +559,10 @@ std::vector<int> Spell::getAllSpellIdsSuitableForSpellBook( const int spellLevel
             if ( spell.Level() != spellLevel ) {
                 continue;
             }
+        }
+
+        if ( std::find( mods.blacklistedSpells.begin(), mods.blacklistedSpells.end(), spellId ) != mods.blacklistedSpells.end() ) {
+            continue;
         }
 
         result.push_back( spellId );

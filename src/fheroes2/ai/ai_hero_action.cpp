@@ -1772,7 +1772,7 @@ namespace
 
         hero.Scout( dst_index );
         hero.Move2Dest( dst_index );
-        hero.ResetMovePoints();
+        hero.ResetMovePointsToBoat();
         hero.GetPath().Reset();
 
         // Set the direction of the hero to the one of the boat as the boat does not move when boarding it
@@ -1810,7 +1810,7 @@ namespace
 
         hero.Scout( dst_index );
         hero.Move2Dest( dst_index );
-        hero.ResetMovePoints();
+        hero.ResetMovePointsToCoast();
         hero.GetPath().Reset();
 
         from.setBoat( Maps::GetDirection( fromIndex, dst_index ), hero.GetColor() );

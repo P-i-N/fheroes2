@@ -44,6 +44,7 @@
 #include "dialog.h"
 #include "direction.h"
 #include "game_io.h"
+#include "game_modifiers.h"
 #include "game_static.h"
 #include "ground.h"
 #include "icn.h"
@@ -1059,7 +1060,46 @@ uint32_t Heroes::GetMaxMovePoints( const bool onWater ) const
         }
     }
 
+    const Game::Modifiers & mods = Game::GetModifiers();
+    result = ( result * mods.movementScaling ) / 100;
+
     return result;
+}
+
+void Heroes::ResetMovePointsToBoat()
+{
+    const Game::Modifiers & mods = Game::GetModifiers();
+    if ( mods.freeBoatEmbarkation ) {
+        uint32_t maxWaterPoints = GetMaxMovePoints( true );
+        uint32_t maxLandPoints = GetMaxMovePoints( false );
+
+        // Hero should not lose all move points here, but should rather get a percentage of them
+        uint32_t waterPoints = ( GetMovePoints() * maxWaterPoints ) / maxLandPoints;
+
+        ResetMovePoints();
+        IncreaseMovePoints( waterPoints );
+    }
+    else {
+        ResetMovePoints();
+    }
+}
+
+void Heroes::ResetMovePointsToCoast()
+{
+    const Game::Modifiers & mods = Game::GetModifiers();
+    if ( mods.freeBoatEmbarkation ) {
+        uint32_t maxWaterPoints = GetMaxMovePoints( true );
+        uint32_t maxLandPoints = GetMaxMovePoints( false );
+
+        // Hero should not lose all move points here, but should rather get a percentage of them
+        uint32_t landPoints = ( GetMovePoints() * maxLandPoints ) / maxWaterPoints;
+
+        ResetMovePoints();
+        IncreaseMovePoints( landPoints );
+    }
+    else {
+        ResetMovePoints();
+    }
 }
 
 int Heroes::GetMorale() const

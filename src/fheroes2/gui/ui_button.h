@@ -240,6 +240,9 @@ namespace fheroes2
             _updateButtonAreas();
         }
 
+        // Construct button using `getTextAdaptedButton` function
+        ButtonSprite( const int32_t offsetX, const int32_t offsetY, const char * text, const int icnId, const int buttonBackgroundIcnID = 0 );
+
         ButtonSprite( const ButtonSprite & ) = delete;
         ButtonSprite( ButtonSprite && ) noexcept = default;
 

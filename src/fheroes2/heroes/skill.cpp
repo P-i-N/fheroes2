@@ -30,7 +30,7 @@
 
 #include "artifact.h"
 #include "artifact_info.h"
-#include "game.h"
+#include "game_modifiers.h"
 #include "game_static.h"
 #include "heroes.h"
 #include "heroes_base.h"

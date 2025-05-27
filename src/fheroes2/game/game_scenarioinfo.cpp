@@ -35,6 +35,7 @@
 #include "audio_manager.h"
 #include "cursor.h"
 #include "dialog.h"
+#include "dialog_modifiers.h"
 #include "dialog_selectscenario.h"
 #include "difficulty.h"
 #include "game.h" // IWYU pragma: associated
@@ -220,6 +221,10 @@ namespace
                                            isEvilInterface ? ICN::BUTTON_MAP_SELECT_EVIL : ICN::BUTTON_MAP_SELECT_GOOD, 0, 1 );
         buttonSelectMaps.draw();
 
+        // TODO: Implement check & style for `isEvilInterface`?
+        fheroes2::ButtonSprite buttonMods( scenarioBoxRoi.x + 5, scenarioBoxRoi.y + 5, _( "MODIF" ), ICN::EMPTY_MAP_SELECT_BUTTON );
+        buttonMods.draw();
+
         fheroes2::Button buttonOk;
         fheroes2::Button buttonCancel;
 
@@ -345,6 +350,7 @@ namespace
 
             // press button
             buttonSelectMaps.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonSelectMaps.area() ) );
+            buttonMods.drawOnState( le.isMouseLeftButtonPressedInArea( buttonMods.area() ) );
             buttonOk.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonOk.area() ) );
             buttonCancel.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonCancel.area() ) );
 
@@ -388,6 +394,9 @@ namespace
             else if ( Game::HotKeyPressEvent( Game::HotKeyEvent::DEFAULT_CANCEL ) || le.MouseClickLeft( buttonCancel.area() ) ) {
                 result = fheroes2::GameMode::MAIN_MENU;
                 break;
+            }
+            else if ( le.MouseClickLeft( buttonMods.area() ) ) {
+                fheroes2::openModifiersDialog();
             }
 
             if ( Game::HotKeyPressEvent( Game::HotKeyEvent::DEFAULT_OKAY ) || le.MouseClickLeft( buttonOk.area() ) ) {
@@ -519,3 +528,5 @@ int32_t Game::GetStep4Player( const int32_t currentId, const int32_t width, cons
 {
     return currentId * width * maxNumOfPlayers / totalCount + ( width * ( maxNumOfPlayers - totalCount ) / ( 2 * totalCount ) );
 }
+
+#include "game_scenarioinfo_ex.inl"

@@ -26,6 +26,7 @@
 #include <sstream>
 
 #include "artifact.h"
+#include "game_modifiers.h"
 #include "game_static.h"
 #include "spell.h"
 #include "tools.h"
@@ -853,6 +854,11 @@ namespace fheroes2
             return true;
         default:
             break;
+        }
+
+        for ( auto modBonus : Game::GetModifiers().extraCumulativeBonuses ) {
+            if ( bonus == static_cast<ArtifactBonusType>( modBonus ) )
+                return true;
         }
 
         return false;

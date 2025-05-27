@@ -512,6 +512,13 @@ namespace fheroes2
         return AGG::GetICN( _icnId, _releasedIndex );
     }
 
+    ButtonSprite::ButtonSprite( const int32_t offsetX, const int32_t offsetY, const char * text, const int icnId, const int buttonBackgroundIcnID /* = 0 */ )
+        : ButtonBase( offsetX, offsetY )
+    {
+        getTextAdaptedButton( _released, _pressed, text, icnId, buttonBackgroundIcnID );
+        _updateButtonAreas();
+    }
+
     const Sprite & ButtonSprite::_getPressed() const
     {
         return _pressed;
